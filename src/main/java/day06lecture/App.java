@@ -30,7 +30,7 @@ public final class App {
             }
             
         });
-        //thread1.start();
+        thread1.start();
 
         MyRunnableImplementation mRI1 = new MyRunnableImplementation("task 1");
         MyRunnableImplementation mRI2 = new MyRunnableImplementation("task 2");
