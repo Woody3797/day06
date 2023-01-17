@@ -25,6 +25,7 @@ public class Cookie {
         while ((readString = br.readLine()) != null) {
             cookieItems.add(readString);
         }
+        br.close();
     }
 
 
@@ -38,6 +39,7 @@ public class Cookie {
         }
     }
 
+    
     public void showCookies() {
         if (cookieItems != null) {
             cookieItems.forEach(c -> System.out.println(c));
