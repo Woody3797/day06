@@ -72,5 +72,10 @@ public final class App {
         System.out.println("subtraction operation: " + minusOperation.process(3, 14));
         System.out.println("concatenation of strings: " + concatenation.process("Hello, ", "world!"));
 
+        MyMessageInterface printString = (a) -> {
+            System.out.println(a);
+        };
+        printString.printMessage("Testing 2nd interface...");
+
     }
 }
