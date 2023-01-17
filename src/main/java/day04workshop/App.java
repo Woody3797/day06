@@ -39,37 +39,36 @@ public final class App {
         cookie.readCookieFile();
         //cookie.showCookies();
 
-
         ServerSocket ss = new ServerSocket(12345);
         Socket s = ss.accept(); // establish connection and wait for client to connect
 
         try (InputStream is = s.getInputStream()) {
             BufferedInputStream bis = new BufferedInputStream(is);
             DataInputStream dis = new DataInputStream(bis);
+
+            OutputStream os = s.getOutputStream();
+            BufferedOutputStream bos = new BufferedOutputStream(os);
+            DataOutputStream dos = new DataOutputStream(bos);
             String line = "";
 
             while (!line.equals("close")) {
                 line = dis.readUTF();
 
                 if (line.equalsIgnoreCase("get-cookie")) {
-                    OutputStream os = s.getOutputStream();
-                    BufferedOutputStream bos = new BufferedOutputStream(os);
-                    DataOutputStream dos = new DataOutputStream(bos);
                     String cookieValue = cookie.returnCookie();
                     dos.writeUTF(cookieValue);
                     dos.flush();
-
                 }
             }
-
+            dos.close();
+            bos.close();
+            os.close();
             dis.close();
             bis.close();
             is.close();
-            
         } catch (EOFException ex) {
             s.close();
             ss.close();
         }
-
     }
 }
