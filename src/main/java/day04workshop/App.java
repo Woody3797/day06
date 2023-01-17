@@ -1,11 +1,14 @@
 package day04workshop;
 
 import java.io.BufferedInputStream;
+import java.io.BufferedOutputStream;
 import java.io.DataInputStream;
+import java.io.DataOutputStream;
 import java.io.EOFException;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.OutputStream;
 import java.net.ServerSocket;
 import java.net.Socket;
 
@@ -34,7 +37,7 @@ public final class App {
 
         Cookie cookie = new Cookie();
         cookie.readCookieFile();
-        cookie.showCookies();
+        //cookie.showCookies();
 
 
         ServerSocket ss = new ServerSocket(12345);
@@ -43,14 +46,19 @@ public final class App {
         try (InputStream is = s.getInputStream()) {
             BufferedInputStream bis = new BufferedInputStream(is);
             DataInputStream dis = new DataInputStream(bis);
-            String line = dis.readUTF();
+            String line = "";
 
             while (!line.equals("close")) {
                 line = dis.readUTF();
 
                 if (line.equalsIgnoreCase("get-cookie")) {
+                    OutputStream os = s.getOutputStream();
+                    BufferedOutputStream bos = new BufferedOutputStream(os);
+                    DataOutputStream dos = new DataOutputStream(bos);
                     String cookieValue = cookie.returnCookie();
-                    System.out.println(cookieValue);
+                    dos.writeUTF(cookieValue);
+                    dos.flush();
+
                 }
             }
         } catch (EOFException ex) {
