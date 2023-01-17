@@ -21,21 +21,25 @@ public class Client {
             BufferedOutputStream bos = new BufferedOutputStream(os);
             DataOutputStream dos = new DataOutputStream(bos);
 
+            InputStream is = socket.getInputStream();
+            BufferedInputStream bis = new BufferedInputStream(is);
+            DataInputStream dis = new DataInputStream(bis);
+
             Console cons = System.console();
             String readInput = "";
 
             while (!readInput.equalsIgnoreCase("close")) {
-                readInput = cons.readLine();
+                readInput = cons.readLine("enter <get-cookie> to get a random cookie or <close> to quit\n");
                 dos.writeUTF(readInput);
                 dos.flush();
 
-                InputStream is = socket.getInputStream();
-                BufferedInputStream bis = new BufferedInputStream(is);
-                DataInputStream dis = new DataInputStream(bis);
                 String line = dis.readUTF();
                 System.out.println(line);
-
             }
+
+            dis.close();
+            bis.close();
+            is.close();
 
         } catch (EOFException ex) {
             socket.close();

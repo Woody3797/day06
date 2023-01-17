@@ -61,6 +61,11 @@ public final class App {
 
                 }
             }
+
+            dis.close();
+            bis.close();
+            is.close();
+            
         } catch (EOFException ex) {
             s.close();
             ss.close();
