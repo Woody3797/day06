@@ -36,11 +36,12 @@ public class Client {
                 String line = dis.readUTF();
                 System.out.println(line);
             }
-
             dis.close();
             bis.close();
             is.close();
-
+            dos.close();
+            bos.close();
+            os.close();
         } catch (EOFException ex) {
             socket.close();
         }
